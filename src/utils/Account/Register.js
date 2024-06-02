@@ -33,7 +33,7 @@ export default class Register extends Component {
     getInformationRegister = async (event) => {
         event.preventDefault();
 
-        const userName = document.getElementById("userName").value.trim();
+        const fullName = document.getElementById("fullName").value.trim();
         const phoneNumber = document.getElementById("phoneNumber").value.trim();
         const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value.trim();
@@ -41,15 +41,15 @@ export default class Register extends Component {
         const selectedRoles = document.querySelectorAll('input[name="role"]:checked');
 
         const errorMessages = {
-            userName: "Bạn chưa nhập tên đăng nhập.",
-            phoneNumber: "Bạn chưa nhập số điện thoại.",
+            fullName: "Tên đầy đủ phải ít hơn 100 ký tự.",
+            phoneNumber: "Số điện thoại phải có từ 10 đến 11 số.",
             email: "Bạn chưa nhập email.",
-            password: "Bạn chưa nhập password.",
+            password: "Mật khẩu phải có từ 8 đến 120 ký tự.",
             rePassword: "Bạn chưa nhập lại mật khẩu.",
             role: "Bạn chưa chọn loại tài khoản.",
         };
 
-        const userNameError = document.getElementById("userName-error");
+        const fullNameError = document.getElementById("fullName-error");
         const phoneNumberError = document.getElementById("phoneNumber-error");
         const emailError = document.getElementById("email-error");
         const passwordError = document.getElementById("password-error");
@@ -57,7 +57,8 @@ export default class Register extends Component {
         const roleError = document.getElementById("role-error");
         const wrongRepass = document.getElementById("wrong-repass");
 
-        if (userNameError) userNameError.innerHTML = "";
+        // Clear previous error messages
+        if (fullNameError) fullNameError.innerHTML = "";
         if (phoneNumberError) phoneNumberError.innerHTML = "";
         if (emailError) emailError.innerHTML = "";
         if (passwordError) passwordError.innerHTML = "";
@@ -66,26 +67,40 @@ export default class Register extends Component {
 
         let isValid = true;
 
-        if (!userName) {
-            if (userNameError) userNameError.innerHTML = errorMessages.userName;
+        if (!fullName) {
+            if (fullNameError) fullNameError.innerHTML = "Bạn chưa nhập tên đăng nhập.";
+            isValid = false;
+        } else if (fullName.length > 100) {
+            if (fullNameError) fullNameError.innerHTML = errorMessages.fullName;
             isValid = false;
         }
+
         if (!phoneNumber) {
+            if (phoneNumberError) phoneNumberError.innerHTML = "Bạn chưa nhập số điện thoại.";
+            isValid = false;
+        } else if (!/^\d{10,11}$/.test(phoneNumber)) {
             if (phoneNumberError) phoneNumberError.innerHTML = errorMessages.phoneNumber;
             isValid = false;
         }
+
         if (!email) {
             if (emailError) emailError.innerHTML = errorMessages.email;
             isValid = false;
         }
+
         if (!password) {
+            if (passwordError) passwordError.innerHTML = "Bạn chưa nhập password.";
+            isValid = false;
+        } else if (password.length < 8 || password.length > 120) {
             if (passwordError) passwordError.innerHTML = errorMessages.password;
             isValid = false;
         }
+
         if (!rePassword) {
             if (rePasswordError) rePasswordError.innerHTML = errorMessages.rePassword;
             isValid = false;
         }
+
         if (selectedRoles.length === 0) {
             if (roleError) roleError.innerHTML = errorMessages.role;
             isValid = false;
@@ -97,9 +112,17 @@ export default class Register extends Component {
             if (wrongRepass) wrongRepass.innerHTML = "Mật khẩu chưa khớp. Xin vui lòng nhập lại!";
             return;
         }
+
         async function checkEmailExists(email) {
+            fetch("https://0bc9-2402-800-637d-be38-c1d1-b0b5-a3df-a4.ngrok-free.app/forbad/auth/signup")
+                .then((response) => response.json())
+                .then((data) => console.log(data))
+                .catch((error) => console.error("Error:", error));
+
             try {
-                const response = await axios.get(`https://662b9fd1de35f91de158edc0.mockapi.io/Account?email=${email}`);
+                const response = await axios.post(
+                    `https://0bc9-2402-800-637d-be38-c1d1-b0b5-a3df-a4.ngrok-free.app/forbad/auth/signup?email=${email}`
+                );
                 return response.data.length > 0;
             } catch (error) {
                 console.error("Error while checking email existence:", error);
@@ -114,22 +137,27 @@ export default class Register extends Component {
                 alert("Email đã tồn tại trong hệ thống. Vui lòng sử dụng một địa chỉ email khác.");
                 return;
             }
-            const response = await axios.post("https://662b9fd1de35f91de158edc0.mockapi.io/Account", {
-                userName,
-                phoneNumber,
+            const response = await axios.post("https://0bc9-2402-800-637d-be38-c1d1-b0b5-a3df-a4.ngrok-free.app/forbad/auth/signup", {
                 email,
+                phoneNumber,
                 password,
+                fullName,
                 roles,
             });
+            // console.log("Name: ", fullName);
+            // console.log("sdt", phoneNumber);
+            // console.log("email ", email);
+            // console.log("pwd", password);
 
-            if (response.status === 201) {
+            console.log("role", roles);
+            if (response.status === 200) {
                 const token = response.data.token;
                 localStorage.setItem("token", token);
                 alert("Đăng ký thành công!");
             }
         } catch (error) {
             console.error("An error occurred while registering:", error);
-            if (error.response && error.response.status === 409) {
+            if (error.response && error.response.status === 400) {
                 alert("Email đã tồn tại trong hệ thống. Vui lòng sử dụng một địa chỉ email khác.");
             } else {
                 // Handle other errors if needed
@@ -150,7 +178,7 @@ export default class Register extends Component {
                             </div>
                         </div>
                         <div className="header-login-form-right m-0">
-                            <a href="Guest.html">
+                            <a href="/">
                                 Trở về trang chủ <i className="fa-solid fa-arrow-right" />
                             </a>
                         </div>
@@ -163,18 +191,18 @@ export default class Register extends Component {
                     <div className="login-right">
                         <form onSubmit={this.getInformationRegister}>
                             <h1>Đăng kí</h1>
-                            <div className="name-phone d-flex">
-                                <div className="input-box" style={{ marginRight: 5 }}>
-                                    <input type="text" placeholder="Họ và tên" id="userName" />
-                                    <i className="fa-solid fa-user" />
-                                    <p id="userName-error" className="text-danger"></p>
-                                </div>
-                                <div className="input-box">
-                                    <input type="text" placeholder="Số điện thoại" id="phoneNumber" />
-                                    <i className="fa-solid fa-phone" />
-                                    <p id="phoneNumber-error" className="text-danger"></p>
-                                </div>
+
+                            <div className="input-box" style={{ marginRight: 5 }}>
+                                <input type="text" placeholder="Họ và tên" id="fullName" />
+                                <i className="fa-solid fa-user" />
+                                <p id="fullName-error" className="text-danger"></p>
                             </div>
+                            <div className="input-box">
+                                <input type="text" placeholder="Số điện thoại" id="phoneNumber" />
+                                <i className="fa-solid fa-phone" />
+                                <p id="phoneNumber-error" className="text-danger"></p>
+                            </div>
+
                             <div className="input-box">
                                 <input type="email" placeholder="Email" id="email" />
                                 <i className="fa-solid fa-envelope" />
@@ -196,10 +224,10 @@ export default class Register extends Component {
                             <div className="role p-2">
                                 <label>Chọn vai trò:</label>
                                 <label htmlFor="guest">
-                                    <input type="radio" name="role" value="guest" id="guest" /> Khách
+                                    <input type="radio" name="role" value="customer" id="customer" /> Khách
                                 </label>
-                                <label htmlFor="owner">
-                                    <input type="radio" name="role" value="owner" id="owner" /> Chủ sân
+                                <label htmlFor="manager">
+                                    <input type="radio" name="role" value="manager" id="manager" /> Chủ sân
                                 </label>
                                 <p id="role-error" className="text-danger"></p>
                             </div>
@@ -208,11 +236,11 @@ export default class Register extends Component {
                             </div>
                             <hr />
                             <div className="login-with">
-                                <div className="gmail">
+                                {/* <div className="gmail">
                                     <button className="btn btn-danger p-2">
-                                        <i className="fa-brands fa-google" /> Đăng nhập với Google
+                                        <i className="fa-brands fa-google" /> Đăng kí với Google
                                     </button>
-                                </div>
+                                </div> */}
                             </div>
                             <div className="register-link">
                                 <p>
