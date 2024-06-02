@@ -1,8 +1,7 @@
 import React, { Component, createRef } from "react";
+import Footer from "../../componets/Footer";
+import axios from "axios"; // Import axios library
 import "../../css/login.css";
-import getInformationRegister from "../../js/Register.js";
-import Footer from "../../componets/Footer.jsx";
-
 export default class Register extends Component {
     constructor(props) {
         super(props);
@@ -31,6 +30,112 @@ export default class Register extends Component {
         target.classList.toggle("fa-eye");
     };
 
+    getInformationRegister = async (event) => {
+        event.preventDefault();
+
+        const userName = document.getElementById("userName").value.trim();
+        const phoneNumber = document.getElementById("phoneNumber").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
+        const rePassword = document.getElementById("re-password").value.trim();
+        const selectedRoles = document.querySelectorAll('input[name="role"]:checked');
+
+        const errorMessages = {
+            userName: "Bạn chưa nhập tên đăng nhập.",
+            phoneNumber: "Bạn chưa nhập số điện thoại.",
+            email: "Bạn chưa nhập email.",
+            password: "Bạn chưa nhập password.",
+            rePassword: "Bạn chưa nhập lại mật khẩu.",
+            role: "Bạn chưa chọn loại tài khoản.",
+        };
+
+        const userNameError = document.getElementById("userName-error");
+        const phoneNumberError = document.getElementById("phoneNumber-error");
+        const emailError = document.getElementById("email-error");
+        const passwordError = document.getElementById("password-error");
+        const rePasswordError = document.getElementById("re-password-error");
+        const roleError = document.getElementById("role-error");
+        const wrongRepass = document.getElementById("wrong-repass");
+
+        if (userNameError) userNameError.innerHTML = "";
+        if (phoneNumberError) phoneNumberError.innerHTML = "";
+        if (emailError) emailError.innerHTML = "";
+        if (passwordError) passwordError.innerHTML = "";
+        if (rePasswordError) rePasswordError.innerHTML = "";
+        if (wrongRepass) wrongRepass.innerHTML = "";
+
+        let isValid = true;
+
+        if (!userName) {
+            if (userNameError) userNameError.innerHTML = errorMessages.userName;
+            isValid = false;
+        }
+        if (!phoneNumber) {
+            if (phoneNumberError) phoneNumberError.innerHTML = errorMessages.phoneNumber;
+            isValid = false;
+        }
+        if (!email) {
+            if (emailError) emailError.innerHTML = errorMessages.email;
+            isValid = false;
+        }
+        if (!password) {
+            if (passwordError) passwordError.innerHTML = errorMessages.password;
+            isValid = false;
+        }
+        if (!rePassword) {
+            if (rePasswordError) rePasswordError.innerHTML = errorMessages.rePassword;
+            isValid = false;
+        }
+        if (selectedRoles.length === 0) {
+            if (roleError) roleError.innerHTML = errorMessages.role;
+            isValid = false;
+        }
+
+        if (!isValid) return;
+
+        if (password !== rePassword) {
+            if (wrongRepass) wrongRepass.innerHTML = "Mật khẩu chưa khớp. Xin vui lòng nhập lại!";
+            return;
+        }
+        async function checkEmailExists(email) {
+            try {
+                const response = await axios.get(`https://662b9fd1de35f91de158edc0.mockapi.io/Account?email=${email}`);
+                return response.data.length > 0;
+            } catch (error) {
+                console.error("Error while checking email existence:", error);
+
+                return false;
+            }
+        }
+        try {
+            const roles = Array.from(selectedRoles).map((role) => role.value);
+            const emailExists = await checkEmailExists(email);
+            if (emailExists) {
+                alert("Email đã tồn tại trong hệ thống. Vui lòng sử dụng một địa chỉ email khác.");
+                return;
+            }
+            const response = await axios.post("https://662b9fd1de35f91de158edc0.mockapi.io/Account", {
+                userName,
+                phoneNumber,
+                email,
+                password,
+                roles,
+            });
+
+            if (response.status === 201) {
+                const token = response.data.token;
+                localStorage.setItem("token", token);
+                alert("Đăng ký thành công!");
+            }
+        } catch (error) {
+            console.error("An error occurred while registering:", error);
+            if (error.response && error.response.status === 409) {
+                alert("Email đã tồn tại trong hệ thống. Vui lòng sử dụng một địa chỉ email khác.");
+            } else {
+                // Handle other errors if needed
+            }
+        }
+    };
     render() {
         return (
             <div>
@@ -56,7 +161,7 @@ export default class Register extends Component {
                         <img src="asserts/img/logo-cau-long-dep-01.png" alt="Logo" />
                     </div>
                     <div className="login-right">
-                        <form onSubmit={getInformationRegister}>
+                        <form onSubmit={this.getInformationRegister}>
                             <h1>Đăng kí</h1>
                             <div className="name-phone d-flex">
                                 <div className="input-box" style={{ marginRight: 5 }}>
@@ -77,12 +182,12 @@ export default class Register extends Component {
                             </div>
                             <div className="input-pass" style={{ display: "flex" }}>
                                 <div className="input-box" style={{ marginRight: 5 }}>
-                                    <input type="password" placeholder="Mật Khẩu" id="password" ref={this.passwordRef} required />
+                                    <input type="password" placeholder="Mật Khẩu" id="password" ref={this.passwordRef} />
                                     <i id="lock" className="fa-solid fa-lock" data-target="password" ref={this.lockRef} />
                                     <p id="password-error" className="text-danger"></p>
                                 </div>
                                 <div className="input-box">
-                                    <input type="password" placeholder="Nhập lại mật khẩu" id="re-password" ref={this.rePasswordRef} required />
+                                    <input type="password" placeholder="Nhập lại mật khẩu" id="re-password" ref={this.rePasswordRef} />
                                     <i id="lock-re" className="fa-solid fa-lock" data-target="re-password" ref={this.lockReRef} />
                                     <p id="re-password-error" className="text-danger"></p>
                                 </div>

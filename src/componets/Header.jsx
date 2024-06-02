@@ -8,7 +8,7 @@ export default class Header extends Component {
                     <div className>
                         <div className="header-top">
                             <div className="logo">
-                                <img src="../img/logo-cau-long-dep-01.png" alt />
+                                <img src="asserts/img/logo-cau-long-dep-01.png" alt />
                             </div>
                             <div className="search-name">
                                 <input type="text" placeholder="Nhập tên sân cần tìm" id />
@@ -41,7 +41,7 @@ export default class Header extends Component {
                                     {/* nếu chưa login chuyển sang trang login  */}
                                     <a href="updateProfile.html" className="user">
                                         {/* truyền avt  */}
-                                        <img src="../img/download (user).jpg" alt />
+                                        <img src="asserts/img/download (user).jpg" alt />
                                     </a>
                                     <p className="user-name">Ushio</p>
                                     <a href="Guest.html" className="logout">
