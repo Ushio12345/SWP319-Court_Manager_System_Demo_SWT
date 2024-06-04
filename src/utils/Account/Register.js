@@ -153,6 +153,15 @@ export default class Register extends Component {
             }
         }
     };
+    login_google = async (event) => {
+        fetch("http://localhost:8080/forbad/auth/google")
+            .then((response) => response.json())
+            .then((data) => {
+                // Redirect to the Google login URL
+                window.location.href = data.redirectUrl;
+            })
+            .catch((error) => console.error(error));
+    };
     render() {
         return (
             <div>
@@ -218,7 +227,7 @@ export default class Register extends Component {
                             </div>
                             <div className="login-with">
                                 <div className="gmail">
-                                    <button className="btn btn-danger p-2">
+                                    <button className="btn btn-danger p-2" onClick={this.login_google}>
                                         <i className="fa-brands fa-google" /> Google
                                     </button>
                                 </div>
