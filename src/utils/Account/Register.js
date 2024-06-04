@@ -112,9 +112,7 @@ export default class Register extends Component {
                 .catch((error) => console.error("Error:", error));
 
             try {
-                const response = await axios.post(
-                    `http://localhost:8080/forbad/auth/signup?email=${email}`
-                );
+                const response = await axios.post(`http://localhost:8080/forbad/auth/signup?email=${email}`);
                 return response.data.length > 0;
             } catch (error) {
                 console.error("Error while checking email existence:", error);
@@ -143,6 +141,7 @@ export default class Register extends Component {
                 const token = response.data.token;
                 localStorage.setItem("token", token);
                 alert("Đăng ký thành công!");
+                window.location.href = "http://localhost:3003/login";
             }
         } catch (error) {
             console.error("An error occurred while registering:", error);
@@ -220,7 +219,9 @@ export default class Register extends Component {
                             </div>
                             <p id="wrong-repass" className="text-danger text-bold fw-bolder"></p>
                             <div>
-                                <button type="submit" className="btn btn-primary p-2">Đăng kí</button>
+                                <button type="submit" className="btn btn-primary p-2">
+                                    Đăng kí
+                                </button>
                             </div>
                             <div className="divider">
                                 <span>hoặc</span>
