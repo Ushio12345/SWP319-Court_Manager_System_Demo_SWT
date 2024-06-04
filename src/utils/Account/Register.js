@@ -38,7 +38,6 @@ export default class Register extends Component {
         const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value.trim();
         const rePassword = document.getElementById("re-password").value.trim();
-        const selectedRoles = document.querySelectorAll('input[name="role"]:checked');
 
         const errorMessages = {
             fullName: "Tên đầy đủ phải ít hơn 100 ký tự.",
@@ -46,7 +45,6 @@ export default class Register extends Component {
             email: "Bạn chưa nhập email.",
             password: "Mật khẩu phải có từ 8 đến 120 ký tự.",
             rePassword: "Bạn chưa nhập lại mật khẩu.",
-            role: "Bạn chưa chọn loại tài khoản.",
         };
 
         const fullNameError = document.getElementById("fullName-error");
@@ -54,7 +52,6 @@ export default class Register extends Component {
         const emailError = document.getElementById("email-error");
         const passwordError = document.getElementById("password-error");
         const rePasswordError = document.getElementById("re-password-error");
-        const roleError = document.getElementById("role-error");
         const wrongRepass = document.getElementById("wrong-repass");
 
         // Clear previous error messages
@@ -101,11 +98,6 @@ export default class Register extends Component {
             isValid = false;
         }
 
-        if (selectedRoles.length === 0) {
-            if (roleError) roleError.innerHTML = errorMessages.role;
-            isValid = false;
-        }
-
         if (!isValid) return;
 
         if (password !== rePassword) {
@@ -114,14 +106,14 @@ export default class Register extends Component {
         }
 
         async function checkEmailExists(email) {
-            fetch("https://0bc9-2402-800-637d-be38-c1d1-b0b5-a3df-a4.ngrok-free.app/forbad/auth/signup")
+            fetch("http://localhost:8080/forbad/auth/signup")
                 .then((response) => response.json())
                 .then((data) => console.log(data))
                 .catch((error) => console.error("Error:", error));
 
             try {
                 const response = await axios.post(
-                    `https://0bc9-2402-800-637d-be38-c1d1-b0b5-a3df-a4.ngrok-free.app/forbad/auth/signup?email=${email}`
+                    `http://localhost:8080/forbad/auth/signup?email=${email}`
                 );
                 return response.data.length > 0;
             } catch (error) {
@@ -131,25 +123,22 @@ export default class Register extends Component {
             }
         }
         try {
-            const roles = Array.from(selectedRoles).map((role) => role.value);
             const emailExists = await checkEmailExists(email);
             if (emailExists) {
                 alert("Email đã tồn tại trong hệ thống. Vui lòng sử dụng một địa chỉ email khác.");
                 return;
             }
-            const response = await axios.post("https://0bc9-2402-800-637d-be38-c1d1-b0b5-a3df-a4.ngrok-free.app/forbad/auth/signup", {
+            const response = await axios.post("http://localhost:8080/forbad/auth/signup", {
                 email,
                 phoneNumber,
                 password,
                 fullName,
-                roles,
             });
             // console.log("Name: ", fullName);
             // console.log("sdt", phoneNumber);
             // console.log("email ", email);
             // console.log("pwd", password);
 
-            console.log("role", roles);
             if (response.status === 200) {
                 const token = response.data.token;
                 localStorage.setItem("token", token);
@@ -221,18 +210,18 @@ export default class Register extends Component {
                                 </div>
                             </div>
                             <p id="wrong-repass" className="text-danger text-bold fw-bolder"></p>
-                            <div className="role p-2">
-                                <label>Chọn vai trò:</label>
-                                <label htmlFor="guest">
-                                    <input type="radio" name="role" value="customer" id="customer" /> Khách
-                                </label>
-                                <label htmlFor="manager">
-                                    <input type="radio" name="role" value="manager" id="manager" /> Chủ sân
-                                </label>
-                                <p id="role-error" className="text-danger"></p>
+                            <div>
+                                <button type="submit" className="btn btn-primary p-2">Đăng kí</button>
                             </div>
-                            <div className="btn">
-                                <button type="submit">Đăng kí</button>
+                            <div className="divider">
+                                <span>hoặc</span>
+                            </div>
+                            <div className="login-with">
+                                <div className="gmail">
+                                    <button className="btn btn-danger p-2">
+                                        <i className="fa-brands fa-google" /> Google
+                                    </button>
+                                </div>
                             </div>
                             <hr />
                             <div className="login-with">
