@@ -156,7 +156,7 @@ a {
 .manager .body-manager .manager-left {
     padding: 20px 0;
     width: 20%;
-    background-color: #07553b;
+    background-color: black;
 }
 .manager .body-manager .manager-left .manager-left-title {
     display: flex;
@@ -168,7 +168,7 @@ a {
 }
 .manager .body-manager .manager-left .list-option ul li {
     margin-bottom: 20px;
-    background-color: #07553b;
+    background-color: black;
     width: 100%;
     height: 70px;
     padding-left: 20px;
@@ -297,6 +297,7 @@ a {
     padding: 5px 10px;
     margin-left: 20px;
     background-color: aliceblue;
+    color: black;
 }
 .manager .topbar .select-branch select {
     background-color: aliceblue;
@@ -434,15 +435,18 @@ thead {
     background-color: #183135;
 }
 th {
-    background-color: #ccd56c !important;
-    color: black !important;
+    background-color: rgb(70, 69, 69) !important;
+    color: white !important;
 }
 
 .topbar,
 .footer-Manager {
-    background-color: #ccd56c;
-    color: #002e86 !important;
+    background-color: black;
+    color: white !important;
 }
 .body-manager {
-    background-color: #f3ce491b;
+    background-color: rgb(255, 251, 251);
+}
+table {
+    table-layout: auto;
 }

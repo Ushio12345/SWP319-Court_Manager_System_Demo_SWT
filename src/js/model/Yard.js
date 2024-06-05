@@ -4,8 +4,8 @@ import axios from "axios";
 export default function Yard() {
     const [yards, setYards] = useState([]);
     const [slots, setSlots] = useState([]);
-    const [newYard, setNewYard] = useState({ nameCourt: "", CoSo: "", imgYard: "" });
-    const [newSlot, setNewSlot] = useState({ timeFrame: "", yardId: "" });
+    const [newYard, setNewYard] = useState({ nameCourt: "", Slot: [], imgYard: "" });
+    const [newSlot, setNewSlot] = useState({ nameSlot: "", timeFrame: "", yardId: "" });
     const [selectedYard, setSelectedYard] = useState(null);
 
     useEffect(() => {
@@ -35,7 +35,7 @@ export default function Yard() {
         try {
             const response = await axios.post("https://662b9fd1de35f91de158edc0.mockapi.io/yard", newYard);
             setYards([...yards, response.data]);
-            setNewYard({ nameCourt: "", CoSo: "", imgYard: "" });
+            setNewYard({ nameCourt: "", Slot: [], imgYard: "" });
         } catch (error) {
             console.error("Error adding yard:", error);
         }
@@ -45,7 +45,7 @@ export default function Yard() {
         try {
             const response = await axios.post("https://662b9fd1de35f91de158edc0.mockapi.io/slot", newSlot);
             setSlots([...slots, response.data]);
-            setNewSlot({ timeFrame: "", yardId: "" });
+            setNewSlot({ nameSlot: "", timeFrame: "", yardId: "" });
         } catch (error) {
             console.error("Error adding slot:", error);
         }
@@ -89,7 +89,7 @@ export default function Yard() {
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
-        if (id === "timeFrame" || id === "yardId") {
+        if (id === "timeFrame" || id === "yardId" || id === "nameSlot") {
             setNewSlot({ ...newSlot, [id]: value });
         } else {
             setNewYard({ ...newYard, [id]: value });
@@ -97,16 +97,14 @@ export default function Yard() {
     };
 
     const handleDetailClick = (yard) => {
-        setSelectedYard(yard);
+        const yardSlots = slots.filter((slot) => slot.yardId === yard.id);
+        setSelectedYard({ ...yard, Slot: yardSlots });
     };
 
     return (
         <div className="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="active-tab">
             <div className="row">
-                <div className="table-yard-info col-lg-7">
-                    <button id="btnAddYard1" className="btn btn-success my-4 w-25" data-bs-toggle="modal" data-bs-target="#addYard">
-                        <i className="fa fa-plus mr-1" /> Thêm sân mới
-                    </button>
+                <div className="table-yard-info col-lg-7 ">
                     <table className="table table-striped table-hover">
                         <thead>
                             <tr>
@@ -116,47 +114,51 @@ export default function Yard() {
                             </tr>
                             <tr>
                                 <th>ID</th>
-                                <th className="text-start">Tên cơ sở</th>
+                                <th className="text-start">Slot</th>
                                 <th>Hình ảnh</th>
                                 <th>Thao tác</th>
                             </tr>
                         </thead>
                         <tbody id="tblYard">
-                            {yards.map((yard) => (
-                                <tr key={yard.id}>
-                                    <td>{yard.id}</td>
-                                    <td className="text-align-start" style={{ textAlign: "left" }}>
-                                        {yard.nameCourt}
-                                    </td>
-                                    <td>
-                                        <img src={yard.imgYard} alt={yard.nameCourt} style={{ height: "100%", width: "45%", margin: "auto" }} />
-                                    </td>
-                                    <td className="d-flex align-items-center justify-content-center" style={{ height: "100px" }}>
-                                        <button
-                                            className="btn"
-                                            onClick={() => handleDetailClick(yard)}
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#detailYardModal"
-                                        >
-                                            <i className="fa-solid fa-circle-info"></i>
-                                        </button>
-                                        <button className="btn">
-                                            <i className="fa-solid fa-pen-to-square"></i>
-                                        </button>
-                                        <button className="btn" onClick={() => deleteYard(yard.id)}>
-                                            <i className="fa-solid fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
+                            {yards.map((yard) => {
+                                const yardSlots = slots.filter((slot) => slot.yardId === yard.id);
+                                const slotNames = yardSlots.map((slot) => slot.nameSlot).join(", ");
+                                return (
+                                    <tr key={yard.id}>
+                                        <td>{yard.id}</td>
+                                        <td className="text-align-start" style={{ textAlign: "left" }}>
+                                            {slotNames}
+                                        </td>
+                                        <td>
+                                            <img src={yard.imgYard} alt={yard.nameCourt} style={{ height: "", width: "100px", margin: "auto" }} />
+                                        </td>
+                                        <td className="d-flex align-items-center justify-content-center" style={{ height: "100px" }}>
+                                            <button
+                                                className="btn"
+                                                onClick={() => handleDetailClick(yard)}
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#detailYardModal"
+                                            >
+                                                <i className="fa-solid fa-circle-info"></i>
+                                            </button>
+                                            <button className="btn">
+                                                <i className="fa-solid fa-pen-to-square"></i>
+                                            </button>
+                                            <button className="btn" onClick={() => deleteYard(yard.id)}>
+                                                <i className="fa-solid fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                );
+                            })}
                         </tbody>
                     </table>
                 </div>
 
                 <div className="table-slot col-lg-5">
-                    <button id="btnAddSlot2" className="btn btn-success my-4 w-50" data-bs-toggle="modal" data-bs-target="#addSlot">
+                    {/* <button id="btnAddSlot2" className="btn btn-success my-4 w-50" data-bs-toggle="modal" data-bs-target="#addSlot">
                         <i className="fa fa-plus mr-1" /> Thêm slot mới
-                    </button>
+                    </button> */}
                     <table className="table table-striped table-hover">
                         <thead>
                             <tr>
@@ -166,6 +168,7 @@ export default function Yard() {
                             </tr>
                             <tr>
                                 <th>ID</th>
+                                <th>Tên Slot</th>
                                 <th>Khung giờ</th>
                                 <th>Thao tác</th>
                             </tr>
@@ -174,6 +177,7 @@ export default function Yard() {
                             {slots.map((slot) => (
                                 <tr key={slot.id}>
                                     <td className="text-center">{slot.id}</td>
+                                    <td className="text-center">{slot.nameSlot}</td>
                                     <td className="text-center">{slot.timeFrame}</td>
                                     <td className="d-flex" style={{ height: "" }}>
                                         <button className="btn" onClick={() => console.log(slot)}>
@@ -246,6 +250,16 @@ export default function Yard() {
                         </div>
                         <div className="modal-body">
                             <div className="form-group">
+                                <label htmlFor="nameSlot">Tên Slot</label>
+                                <input
+                                    id="nameSlot"
+                                    className="form-control"
+                                    placeholder="Nhập tên slot"
+                                    value={newSlot.nameSlot}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
+                            <div className="form-group">
                                 <label htmlFor="timeFrame">Khung giờ</label>
                                 <input
                                     id="timeFrame"
@@ -295,6 +309,16 @@ export default function Yard() {
                                         <p>ID: {selectedYard.id}</p>
                                         <p>Tên sân: {selectedYard.nameCourt}</p>
                                         <p>Cơ sở: {selectedYard.CoSo}</p>
+                                        <div>
+                                            <h5>Slots:</h5>
+                                            <ul>
+                                                {selectedYard.Slot.map((slot) => (
+                                                    <li key={slot.id}>
+                                                        {slot.nameSlot} ({slot.timeFrame})
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
                                     </div>
                                 </>
                             )}

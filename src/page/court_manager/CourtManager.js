@@ -27,7 +27,7 @@ export default class CourtManager extends Component {
                                 <img src="asserts/img/logo-cau-long-dep-01.png" alt />
                             </div>
                             <div className="nameapp">
-                                <p>ForBaB</p>
+                                <p>ForBaD</p>
                             </div>
                         </div>
                         <div className="select-branch">
@@ -227,6 +227,9 @@ export default class CourtManager extends Component {
                                             <a className="nav-link" href>
                                                 Đã check-in
                                             </a>
+                                            <a className="nav-link" href>
+                                                Đã hủy
+                                            </a>
                                         </div>
                                         <div className="check-all">
                                             <button id className="btn btn-warning" data-toggle="modal" href>
@@ -358,6 +361,30 @@ export default class CourtManager extends Component {
                                 {/* yard */}
                                 <div className="tab-pane fade" id="dsYard" role="tabpanel">
                                     <h1 class="text-center">Trang quản lí thông tin sân</h1>
+                                    <div className="choiceCourt">
+                                        <select className=" p-2">
+                                            <option>Sân cầu lông Hoàng Kiếm</option>
+                                            <option>Sân cầu lông Xuân Diệu</option>
+                                        </select>
+                                    </div>
+                                    <div className="d-flex justify-content-between align-items-center">
+                                        <button
+                                            id="btnAddYard1"
+                                            className="btn btn-success my-4 w-25"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#addYard"
+                                        >
+                                            <i className="fa fa-plus mr-1" /> Thêm sân mới
+                                        </button>
+                                        <button
+                                            id="btnAddSlot2"
+                                            className="btn btn-success my-4 w-25"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#addSlot"
+                                        >
+                                            <i className="fa fa-plus mr-1" /> Thêm slot mới
+                                        </button>
+                                    </div>
                                     {/*Danh sách sản phẩm */}
                                     {/* <div class="location-search d-flex justify-content-between align-items-center"> */}
                                     {/* <div class="location w-25">
