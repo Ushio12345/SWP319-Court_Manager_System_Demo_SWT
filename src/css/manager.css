@@ -8,7 +8,10 @@ body {
     font-family: "Quicksand", sans-serif;
     font-weight: 500;
 }
-
+h1 {
+    font-family: "Quicksand", sans-serif;
+    color: #07553b !important;
+}
 img {
     display: block;
     width: 100%;
@@ -19,7 +22,7 @@ ul li {
 }
 
 a {
-    text-decoration: none;
+    text-decoration: none !important;
     font-weight: 600;
 }
 
@@ -153,7 +156,7 @@ a {
 .manager .body-manager .manager-left {
     padding: 20px 0;
     width: 20%;
-    background-color: #111d8b;
+    background-color: #07553b;
 }
 .manager .body-manager .manager-left .manager-left-title {
     display: flex;
@@ -165,7 +168,7 @@ a {
 }
 .manager .body-manager .manager-left .list-option ul li {
     margin-bottom: 20px;
-    background-color: #111d8b;
+    background-color: #07553b;
     width: 100%;
     height: 70px;
     padding-left: 20px;
@@ -200,7 +203,7 @@ a {
     justify-content: space-between;
     justify-content: left;
     color: white;
-
+    width: 100%;
     text-align: left;
 }
 .manager .body-manager .manager-left .list-option ul li a .icon {
@@ -221,12 +224,8 @@ a {
     color: black;
 }
 .manager th {
-    background-color: #4334aa;
-    color: #fff;
 }
 .manager td {
-    text-align: center;
-    background-color: blanchedalmond;
 }
 .manager td i {
     font-size: 25px;
@@ -395,6 +394,18 @@ a {
     height: 40px;
     padding-left: 20px;
 }
+.input-group {
+    position: relative;
+}
+.input-group-append {
+    height: 40px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.input-group-append span {
+    height: 100%;
+}
 #dsYard .location select {
     background-color: rgb(241, 240, 240);
 }
@@ -421,4 +432,17 @@ a {
 }
 thead {
     background-color: #183135;
+}
+th {
+    background-color: #ccd56c !important;
+    color: black !important;
+}
+
+.topbar,
+.footer-Manager {
+    background-color: #ccd56c;
+    color: #002e86 !important;
+}
+.body-manager {
+    background-color: #f3ce491b;
 }

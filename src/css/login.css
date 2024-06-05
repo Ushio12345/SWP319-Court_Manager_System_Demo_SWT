@@ -8,7 +8,7 @@ img {
     width: 100%;
 }
 
-body {
+.form {
     background-image: url("../../public/asserts/img/4a331c1398d3d7a67ecba739d2e8bb43.jpg");
     background-repeat: no-repeat;
     background-size: cover;

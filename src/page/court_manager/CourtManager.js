@@ -74,7 +74,7 @@ export default class CourtManager extends Component {
                                     <li className="nav-item">
                                         <a className="nav-link" href="#dsOrder" data-bs-toggle="tab">
                                             <span className="icon">
-                                                <i className="fa-solid fa-user-tie" />
+                                                <i class="fa-solid fa-file-invoice"></i>
                                             </span>
                                             <span className="title">Quản lý đơn đặt hàng</span>
                                         </a>
@@ -98,12 +98,12 @@ export default class CourtManager extends Component {
                                     <li className="nav-item">
                                         <a className="nav-link" href="#dsYard" data-bs-toggle="tab">
                                             <span className="icon">
-                                                <i className="fa-solid fa-circle-user" />
+                                                <i class="fa fa-table-tennis"></i>
                                             </span>
                                             <span className="title">Quản lý Sân</span>
                                         </a>
                                     </li>
-                                    <a className="w-75 logout m-auto " href="login.html">
+                                    <a className="w-75 logout m-auto " href="/login">
                                         <span className="icon">
                                             <i className="fas fa-sign-out-alt" />
                                         </span>
@@ -162,12 +162,12 @@ export default class CourtManager extends Component {
                                     <div className="row mb-4">
                                         <div className="col-md-8">
                                             {/* BEGIN BUTTON THÊM MỚI */}
-                                            <div className="btn-order">
-                                                <button id className="btn btn-success" data-toggle="tab" href="#dsOrder">
+                                            <div className="btn-order row">
+                                                <button className="btn btn-success col-lg-4 me-3" data-toggle="tab" href="#dsOrder">
                                                     <i className />
                                                     Đơn cố định
                                                 </button>
-                                                <button id className="btn btn-success" data-toggle="tab" href="#dsOrder2">
+                                                <button className="btn btn-success col-lg-4" data-toggle="tab" href="#dsOrder2">
                                                     <i className />
                                                     Đơn ngày
                                                 </button>
@@ -263,7 +263,7 @@ export default class CourtManager extends Component {
                                     <div className="row">
                                         <div className="col-md-8">
                                             {/* BEGIN BUTTON THÊM MỚI */}
-                                            <button id="btnThemCoSo" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#myCoSo">
+                                            <button id="btnThemCoSo" className="btn btn-success w-25" data-bs-toggle="modal" data-bs-target="#myCoSo">
                                                 <i className="fa fa-plus mr-1" />
                                                 Thêm Mới
                                             </button>
@@ -357,6 +357,7 @@ export default class CourtManager extends Component {
                                 {/* ---------------------------------------kết thúc COw so------------------------------------------------- */}
                                 {/* yard */}
                                 <div className="tab-pane fade" id="dsYard" role="tabpanel">
+                                    <h1 class="text-center">Trang quản lí thông tin sân</h1>
                                     {/*Danh sách sản phẩm */}
                                     {/* <div class="location-search d-flex justify-content-between align-items-center"> */}
                                     {/* <div class="location w-25">
@@ -365,7 +366,7 @@ export default class CourtManager extends Component {
                           <option value="">Quận Bình Chánh</option>
                       </select>
                   </div> */}
-                                    <div className="input-group w-50">
+                                    {/* <div className="input-group w-50">
                                         <input
                                             type="text"
                                             className="form-control"
@@ -378,7 +379,7 @@ export default class CourtManager extends Component {
                                                 <i className="fa fa-search" />
                                             </span>
                                         </div>
-                                    </div>
+                                    </div> */}
                                     {/* </div> */}
                                     <div className="change-yard mt-4">
                                         <ul className="nav nav-tabs" id="myTab" role="tablist">
@@ -631,7 +632,7 @@ export default class CourtManager extends Component {
                                 <div className="row">
                                     <div className="col-md-8">
                                         {/* BEGIN BUTTON THÊM MỚI */}
-                                        <button id="btnThemStaff" className="btn btn-success" data-toggle="modal" data-target="#myStaff">
+                                        <button id="btnThemStaff" className="btn btn-success w-25" data-toggle="modal" data-target="#myStaff">
                                             <i className="fa fa-plus mr-1" />
                                             Thêm Mới
                                         </button>

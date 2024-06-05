@@ -1,17 +1,19 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Register from "./utils/Account/Register";
-import Login from "./utils/Login";
 import GuestPage from "./page/guest/GuestPage";
-
+import Login from "./utils/Login";
+import Register from "./utils/Account/Register";
+import CourtManager from "./page/court_manager/CourtManager";
 
 function App() {
     return (
         <Router>
             <Routes>
-                <Route path="/home" element={<GuestPage />} />
+                <Route path="/guest" element={<GuestPage />} />
                 <Route path="/" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/court_manager" element={<CourtManager />} />
             </Routes>
         </Router>
     );

@@ -163,7 +163,7 @@ export default class Register extends Component {
     };
     render() {
         return (
-            <div>
+            <div className="form">
                 <div className="header-login-form">
                     <div className="container d-flex align-items-center justify-content-between">
                         <div className="header-login-form-left">
@@ -175,7 +175,7 @@ export default class Register extends Component {
                             </div>
                         </div>
                         <div className="header-login-form-right m-0">
-                            <a href="/">
+                            <a href="/guest">
                                 Trở về trang chủ <i className="fa-solid fa-arrow-right" />
                             </a>
                         </div>
@@ -243,7 +243,7 @@ export default class Register extends Component {
                             </div>
                             <div className="register-link">
                                 <p>
-                                    Bạn đã có tài khoản? <a href="login.html">Đăng nhập</a>
+                                    Bạn đã có tài khoản? <a href="/login">Đăng nhập</a>
                                 </p>
                             </div>
                         </form>

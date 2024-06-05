@@ -57,7 +57,7 @@ export default class Login extends Component {
 
     render() {
         return (
-            <div>
+            <div class="form">
                 <p id="wrong-repass" className="text-danger text-bold fw-bolder"></p>
                 <div className="header-login-form">
                     <div className="container d-flex align-items-center justify-content-between">
