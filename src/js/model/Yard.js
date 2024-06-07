@@ -4,9 +4,10 @@ import axios from "axios";
 export default function Yard() {
     const [yards, setYards] = useState([]);
     const [slots, setSlots] = useState([]);
-    const [newYard, setNewYard] = useState({ nameCourt: "", Slot: [], imgYard: "" });
-    const [newSlot, setNewSlot] = useState({ nameSlot: "", timeFrame: "", yardId: "" });
-    const [selectedYard, setSelectedYard] = useState(null);
+    const [newYard, setNewYard] = useState({ nameYard: "", Slot: [], nameCourt: "", id: "" });
+    const [newSlot, setNewSlot] = useState({ nameSlot: "", timeFrame: "", yardId: "", id: "" });
+    const [selectedYardId, setSelectedYardId] = useState(null);
+    const [selectedYard, setSelectedYard] = useState(null); // Khai báo biến selectedYard
 
     useEffect(() => {
         fetchYards();
@@ -35,7 +36,7 @@ export default function Yard() {
         try {
             const response = await axios.post("https://662b9fd1de35f91de158edc0.mockapi.io/yard", newYard);
             setYards([...yards, response.data]);
-            setNewYard({ nameCourt: "", Slot: [], imgYard: "" });
+            setNewYard({ nameYard: "", Slot: [], imgYard: "" });
         } catch (error) {
             console.error("Error adding yard:", error);
         }
@@ -89,8 +90,10 @@ export default function Yard() {
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
-        if (id === "timeFrame" || id === "yardId" || id === "nameSlot") {
+        if (id === "yardId" || id === "nameSlot") {
             setNewSlot({ ...newSlot, [id]: value });
+        } else if (id === "timeFrame") {
+            setNewSlot({ ...newSlot, timeFrame: value });
         } else {
             setNewYard({ ...newYard, [id]: value });
         }
@@ -102,99 +105,126 @@ export default function Yard() {
     };
 
     return (
-        <div className="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="active-tab">
-            <div className="row">
-                <div className="table-yard-info col-lg-7 ">
-                    <table className="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th colSpan={4} className="text-center">
-                                    Sân 1
-                                </th>
-                            </tr>
-                            <tr>
-                                <th>ID</th>
-                                <th className="text-start">Slot</th>
-                                <th>Hình ảnh</th>
-                                <th>Thao tác</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tblYard">
-                            {yards.map((yard) => {
-                                const yardSlots = slots.filter((slot) => slot.yardId === yard.id);
-                                const slotNames = yardSlots.map((slot) => slot.nameSlot).join(", ");
-                                return (
-                                    <tr key={yard.id}>
-                                        <td>{yard.id}</td>
-                                        <td className="text-align-start" style={{ textAlign: "left" }}>
-                                            {slotNames}
-                                        </td>
-                                        <td>
-                                            <img src={yard.imgYard} alt={yard.nameCourt} style={{ height: "", width: "100px", margin: "auto" }} />
-                                        </td>
-                                        <td className="d-flex align-items-center justify-content-center" style={{ height: "100px" }}>
-                                            <button
-                                                className="btn"
-                                                onClick={() => handleDetailClick(yard)}
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#detailYardModal"
-                                            >
-                                                <i className="fa-solid fa-circle-info"></i>
-                                            </button>
-                                            <button className="btn">
-                                                <i className="fa-solid fa-pen-to-square"></i>
-                                            </button>
-                                            <button className="btn" onClick={() => deleteYard(yard.id)}>
-                                                <i className="fa-solid fa-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
-                </div>
+        <div>
+            <ul className="nav nav-tabs mb-4" id="myTab" role="tablist">
+                {yards.map((yard, index) => (
+                    <li className="nav-item" role="presentation" key={yard.id}>
+                        <a
+                            className={`nav-link ${selectedYardId === yard.id ? "active" : ""}`}
+                            id={`${yard.id}-tab`}
+                            data-bs-toggle="tab"
+                            href={`#${yard.id}`}
+                            role="tab"
+                            aria-controls={yard.id}
+                            aria-selected={selectedYardId === yard.id ? "true" : "false"}
+                            onClick={() => {
+                                setSelectedYardId(yard.id);
+                                handleDetailClick(yard);
+                            }}
+                        >
+                            {yard.nameYard}
+                        </a>
+                    </li>
+                ))}
+                <li className="nav-item" role="presentation">
+                    <a
+                        className="nav-link disabled"
+                        id="disabled-tab"
+                        data-bs-toggle="tab"
+                        href="#disabled"
+                        role="tab"
+                        aria-controls="disabled"
+                        aria-selected="false"
+                        aria-disabled="true"
+                    >
+                        Thông tin sân
+                    </a>
+                </li>
+            </ul>
 
-                <div className="table-slot col-lg-5">
-                    {/* <button id="btnAddSlot2" className="btn btn-success my-4 w-50" data-bs-toggle="modal" data-bs-target="#addSlot">
-                        <i className="fa fa-plus mr-1" /> Thêm slot mới
-                    </button> */}
-                    <table className="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th colSpan={4} className="text-center">
-                                    Slot
-                                </th>
-                            </tr>
-                            <tr>
-                                <th>ID</th>
-                                <th>Tên Slot</th>
-                                <th>Khung giờ</th>
-                                <th>Thao tác</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tblSlot">
-                            {slots.map((slot) => (
-                                <tr key={slot.id}>
-                                    <td className="text-center">{slot.id}</td>
-                                    <td className="text-center">{slot.nameSlot}</td>
-                                    <td className="text-center">{slot.timeFrame}</td>
-                                    <td className="d-flex" style={{ height: "" }}>
-                                        <button className="btn" onClick={() => console.log(slot)}>
-                                            <i className="fa-solid fa-circle-info"></i>
-                                        </button>
-                                        <button className="btn">
-                                            <i className="fa-solid fa-pen-to-square"></i>
-                                        </button>
-                                        <button className="btn" onClick={() => deleteSlot(slot.id)}>
-                                            <i className="fa-solid fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+            <div className="tab-content" id="myTabContent">
+                {yards.map((yard) => (
+                    <div
+                        key={yard.id}
+                        className={`tab-pane fade ${selectedYardId === yard.id ? "show active" : ""}`}
+                        id={yard.id}
+                        role="tabpanel"
+                        aria-labelledby={`${yard.id}-tab`}
+                    >
+                        {selectedYardId === yard.id && (
+                            <div className="row">
+                                <div className="table-yard-info col-lg-7">
+                                    <table className="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th colSpan={4} className="text-center">
+                                                    {yard.nameYard}
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th className="text-start">Slot</th>
+                                                <th className="text-start">Thời gian</th>
+                                                <th>Thao tác</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <td></td>
+                                            <td></td>
+                                            <td className="d-flex">
+                                                <button className="btn" onClick={() => handleDetailClick(yard.id)}>
+                                                    <i className="fa-solid fa-circle-info"></i>
+                                                </button>
+                                                <button className="btn">
+                                                    <i className="fa-solid fa-pen-to-square"></i>
+                                                </button>
+                                                <button className="btn" onClick={() => deleteSlot(yard.id)}>
+                                                    <i className="fa-solid fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                {/* Hiển thị các slot khác */}
+                                <div className="table-slot col-lg-5">
+                                    <table className="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th colSpan={4} className="text-center">
+                                                    Slot
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th>Tên Slot</th>
+                                                <th>Khung giờ</th>
+                                                <th>Thao tác</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {slots.map((slot) => (
+                                                <tr key={slot.id}>
+                                                    <td className="text-center">{slot.nameSlot}</td>
+                                                    <td className="text-center">{slot.timeFrame}</td>
+                                                    <td className="d-flex">
+                                                        <button className="btn" onClick={() => console.log(slot)}>
+                                                            <i className="fa-solid fa-circle-info"></i>
+                                                        </button>
+                                                        <button className="btn">
+                                                            <i className="fa-solid fa-pen-to-square"></i>
+                                                        </button>
+                                                        <button className="btn" onClick={() => deleteSlot(slot.id)}>
+                                                            <i className="fa-solid fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                ))}
             </div>
 
             {/* Modal thêm mới sân */}
@@ -209,16 +239,16 @@ export default function Yard() {
                         </div>
                         <div className="modal-body">
                             <div className="form-group">
-                                <label htmlFor="nameCourt">Tên sân</label>
+                                <label htmlFor="nameYard">Tên sân</label>
                                 <input
-                                    id="nameCourt"
+                                    id="nameYard"
                                     className="form-control"
                                     placeholder="Nhập tên sân"
-                                    value={newYard.nameCourt}
+                                    value={newYard.nameYard}
                                     onChange={handleInputChange}
                                 />
                             </div>
-                            <div className="form-group">
+                            {/* <div className="form-group">
                                 <label htmlFor="imgYard">Link hình ảnh</label>
                                 <input
                                     id="imgYard"
@@ -227,7 +257,7 @@ export default function Yard() {
                                     value={newYard.imgYard}
                                     onChange={handleInputChange}
                                 />
-                            </div>
+                            </div> */}
                             <div className="form-group">
                                 <button className="btn btn-success" data-bs-dismiss="modal" onClick={addYard}>
                                     Tạo
@@ -269,8 +299,8 @@ export default function Yard() {
                                     onChange={handleInputChange}
                                 />
                             </div>
-                            <div className="form-group">
-                                <label htmlFor="yardId">ID Sân</label>
+                            {/* <div className="form-group">
+                                <label htmlFor="yardId">ID sân cần thêm Slot</label>
                                 <input
                                     id="yardId"
                                     className="form-control"
@@ -278,50 +308,12 @@ export default function Yard() {
                                     value={newSlot.yardId}
                                     onChange={handleInputChange}
                                 />
-                            </div>
+                            </div> */}
                             <div className="form-group">
                                 <button className="btn btn-success" data-bs-dismiss="modal" onClick={addSlot}>
                                     Tạo
                                 </button>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Modal chi tiết sân */}
-            <div className="modal fade" id="detailYardModal" tabIndex="-1" aria-labelledby="detailYardLabel" aria-hidden="true">
-                <div className="modal-dialog modal-xl">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h4 className="modal-title" id="detailYardLabel">
-                                Chi tiết sân
-                            </h4>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body d-flex">
-                            {selectedYard && (
-                                <>
-                                    <div style={{ width: "50%" }}>
-                                        <img src={selectedYard.imgYard} alt={selectedYard.nameCourt} style={{ width: "100%" }} />
-                                    </div>
-                                    <div style={{ width: "50%", paddingLeft: "20px" }}>
-                                        <p>ID: {selectedYard.id}</p>
-                                        <p>Tên sân: {selectedYard.nameCourt}</p>
-                                        <p>Cơ sở: {selectedYard.CoSo}</p>
-                                        <div>
-                                            <h5>Slots:</h5>
-                                            <ul>
-                                                {selectedYard.Slot.map((slot) => (
-                                                    <li key={slot.id}>
-                                                        {slot.nameSlot} ({slot.timeFrame})
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </>
-                            )}
                         </div>
                     </div>
                 </div>

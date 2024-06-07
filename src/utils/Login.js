@@ -1,6 +1,6 @@
 import { Component } from "react";
 import Footer from "../componets/Footer";
-import "../css/login.css";
+import "../css/style.css";
 
 export default class Login extends Component {
     constructor(props) {
@@ -70,7 +70,7 @@ export default class Login extends Component {
                             </div>
                         </div>
                         <div className="header-login-form-right m-0">
-                            <a href="Guest.jsx">
+                            <a href="/">
                                 Trở về trang chủ <i className="fa-solid fa-arrow-right" />
                             </a>
                         </div>

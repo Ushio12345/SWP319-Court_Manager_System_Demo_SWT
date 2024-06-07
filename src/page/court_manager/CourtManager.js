@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import "../../css/manager.css";
+import "../../css/style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import axios from "axios";
 import Yard from "../../js/model/Yard";
+import Court from "./Court";
 
 export default class CourtManager extends Component {
     componentDidMount() {
@@ -261,101 +262,9 @@ export default class CourtManager extends Component {
                                 </div>
 
                                 {/* ----------------------Coso------------------------------------- */}
-                                <div className="tab-pane fade" id="dsCoSo" role="tabpanel">
-                                    {/*Danh sách sản phẩm */}
-                                    <div className="row">
-                                        <div className="col-md-8">
-                                            {/* BEGIN BUTTON THÊM MỚI */}
-                                            <button id="btnThemCoSo" className="btn btn-success w-25" data-bs-toggle="modal" data-bs-target="#myCoSo">
-                                                <i className="fa fa-plus mr-1" />
-                                                Thêm Mới
-                                            </button>
-                                            {/* END BUTTON THÊM MỚI */}
-                                        </div>
-                                        <div className="col-md-4">
-                                            {/* BEGIN TÌM KIẾM */}
-                                            <div className="input-group mb-3">
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    placeholder="Nhập từ khóa"
-                                                    aria-label="Recipient's username"
-                                                    aria-describedby="basic-addon2"
-                                                />
-                                                <div className="input-group-append">
-                                                    <span className="input-group-text" id="basic-addon2">
-                                                        <i className="fa fa-search" />
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            {/* END TÌM KIẾM */}
-                                        </div>
-                                    </div>
-                                    <div className="clear-fix" />
-                                    <div className="tblCoSo" id="tblCoSo">
-                                        {/* BEGIN TABLE SẢN PHẨM */}
-                                        <table className="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>STT</th>
-                                                    <th>Mã cơ sở</th>
-                                                    <th>Tên Cơ Sở</th>
-                                                    <th>Địa chỉ</th>
-                                                    <th>Giờ làm việc</th>
-                                                    <th>Số sân</th>
-                                                    <th>Đánh giá</th>
-                                                    <th>Thao tác</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="tblDSCoSo2" />
-                                        </table>
-                                        {/* END TABLE SẢN PHẨM */}
-                                    </div>
-                                    <br />
-                                </div>
 
-                                {/* Modal for adding Coso */}
-                                <div className="modal fade" id="myCoSo" tabIndex="-1" aria-labelledby="addSlotLabel" aria-hidden="true">
-                                    <div className="modal-dialog">
-                                        <div className="modal-content">
-                                            <div className="modal-header">
-                                                <h4 className="modal-title" id="addSlotLabel">
-                                                    Thêm mới cơ sở
-                                                </h4>
-                                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div className="modal-body">
-                                                <div className="form-group">
-                                                    <label htmlFor="idCourt">Mã cơ sở</label>
-                                                    <input id="idCourt" className="form-control" placeholder="Mã cơ sở" readOnly />
-                                                </div>
-                                                <div className="form-group">
-                                                    <label htmlFor="nameCourt">Tên cơ sở</label>
-                                                    <input id="nameCourt" className="form-control" placeholder="Nhập tên cơ ở" />
-                                                </div>
-                                                <div className="form-group">
-                                                    <label htmlFor="addressCourt">Địa chỉ</label>
-                                                    <input id="addressCourt" className="form-control" placeholder="Nhập địa chỉ" />
-                                                </div>
-                                                <div className="form-group">
-                                                    <label htmlFor="openTime">Khung giờ hoạt động</label>
-                                                    <input id="openTime" className="form-control" placeholder="Nhập giờ mở cửa (7:00 - 23:00)" />
-                                                </div>
-                                                <div className="form-group">
-                                                    <label htmlFor="openTime">Số sân</label>
-                                                    <input
-                                                        id="openTime"
-                                                        type="number"
-                                                        className="form-control"
-                                                        placeholder="Nhập số lượng sân trong cơ sở"
-                                                    />
-                                                </div>
-                                                <div className="form-group">
-                                                    <button className="btn btn-success">Tạo</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div className="tab-pane fade show active" id="dsCoSo" role="tabpanel">
+                                    <Court />
                                 </div>
                                 {/* ---------------------------------------kết thúc COw so------------------------------------------------- */}
                                 {/* yard */}
@@ -409,7 +318,7 @@ export default class CourtManager extends Component {
                                     </div> */}
                                     {/* </div> */}
                                     <div className="change-yard mt-4">
-                                        <ul className="nav nav-tabs" id="myTab" role="tablist">
+                                        {/* <ul className="nav nav-tabs mb-4" id="myTab" role="tablist">
                                             <li className="nav-item" role="presentation">
                                                 <a
                                                     className="nav-link active"
@@ -463,11 +372,11 @@ export default class CourtManager extends Component {
                                                     Thông tin sân
                                                 </a>
                                             </li>
-                                        </ul>
+                                        </ul> */}
 
                                         <div className="tab-content" id="myTabContent">
                                             <Yard />
-                                            <div className="tab-pane fade" id="san2" role="tabpanel" aria-labelledby="link1-tab">
+                                            {/* <div className="tab-pane fade" id="san2" role="tabpanel" aria-labelledby="link1-tab">
                                                 <div className="row">
                                                     <div className="table-yard-info col-lg-7">
                                                         <button
@@ -521,8 +430,8 @@ export default class CourtManager extends Component {
                                                         </table>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div className="tab-pane fade" id="san3" role="tabpanel" aria-labelledby="link2-tab">
+                                            </div> */}
+                                            {/* <div className="tab-pane fade" id="san3" role="tabpanel" aria-labelledby="link2-tab">
                                                 <div className="row">
                                                     <div className="table-yard-info col-lg-7">
                                                         <button
@@ -576,7 +485,7 @@ export default class CourtManager extends Component {
                                                         </table>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                         </div>
 
                                         {/* Modal for adding yard */}

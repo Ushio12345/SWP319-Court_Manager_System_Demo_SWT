@@ -1,13 +1,73 @@
 import React, { Component, createRef } from "react";
 import "../../css/style.css";
-import Header from "../../componets/Header";
+
 import Footer from "../../componets/Footer";
 import CardYard from "../../componets/CardYard";
+import { Link } from "react-router-dom";
 export default class GuestPage extends Component {
     render() {
         return (
             <div>
-                <Header />
+                <section className="header">
+                    <div className="container">
+                        <div className="header-top">
+                            <div className="logo">
+                                <img src="asserts/img/logo-cau-long-dep-01.png" alt />
+                            </div>
+                            <div className="search-name">
+                                <input type="text" placeholder="Nhập tên sân cần tìm" id />
+                                <i className="fa-solid fa-magnifying-glass" />
+                            </div>
+                            <div className="header-top-right">
+                                <div className="list-location">
+                                    <p>
+                                        <i className="fa-solid fa-location-dot" /> Tìm theo vị trí
+                                    </p>
+                                    <div className="location-item">
+                                        <ul id="location">
+                                            <li>
+                                                <Link to="/login">Quận Bình Thạnh</Link>
+                                            </li>
+                                            <li>
+                                                <Link to="/login">Quận Tân Phú</Link>
+                                            </li>
+                                            <li>
+                                                <Link to="/login">Quận 7</Link>
+                                            </li>
+                                            <li>
+                                                <Link to="/login">TP.Thủ Đức</Link>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div className="login">
+                                    {/* truyền avata và user-name nếu người dùng đã login  */}
+                                    {/* nếu chưa login chuyển sang trang login  */}
+                                    <a href="/login" className="user">
+                                        {/* truyền avt  */}
+                                        <i className="fa-regular fa-user" />
+                                    </a>
+                                    <a href="/register" className="register">
+                                        Đăng kí
+                                    </a>{" "}
+                                    |
+                                    <a href="/login" className="logout">
+                                        Đăng nhập{" "}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="header-bot">
+                        <a href="HomePage.html" className="active">
+                            Trang Chủ
+                        </a>
+                        <a href>Giới Thiệu</a>
+                        <a href>Liên hệ </a>
+                        <a href>Quy định</a>
+                    </div>
+                </section>
+
                 {/* BANNER */}
                 <section className="banner">
                     <div className="banner-intro container">
@@ -71,8 +131,7 @@ export default class GuestPage extends Component {
                 <section className="yard">
                     <h1 className="m-4">DANH SÁCH CÁC SÂN CẦU LÔNG</h1>
                     <div className="container w-4/5">
-                        <div className="grid grid-cols-2 ">
-                            <CardYard />
+                        <div className="grid grid-cols-3 gap-4 ">
                             <CardYard />
                             <CardYard />
                             <CardYard />

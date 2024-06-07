@@ -1,7 +1,7 @@
 import React, { Component, createRef } from "react";
 import Footer from "../../componets/Footer";
 import axios from "axios"; // Import axios library
-import "../../css/login.css";
+import "../../css/style.css";
 export default class Register extends Component {
     constructor(props) {
         super(props);
@@ -175,7 +175,7 @@ export default class Register extends Component {
                             </div>
                         </div>
                         <div className="header-login-form-right m-0">
-                            <a href="/guest">
+                            <a href="/">
                                 Trở về trang chủ <i className="fa-solid fa-arrow-right" />
                             </a>
                         </div>

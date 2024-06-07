@@ -9,8 +9,8 @@ function App() {
     return (
         <Router>
             <Routes>
-                <Route path="/guest" element={<GuestPage />} />
-                <Route path="/" element={<Login />} />
+                <Route path="/" element={<GuestPage />} />
+                <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/court_manager" element={<CourtManager />} />
