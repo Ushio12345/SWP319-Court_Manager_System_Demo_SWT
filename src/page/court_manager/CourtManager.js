@@ -5,19 +5,9 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import axios from "axios";
 import Yard from "../../js/model/Yard";
 import Court from "./Court";
+import Staff from "./Staff";
 
 export default class CourtManager extends Component {
-    componentDidMount() {
-        axios
-            .get("https://662b9fd1de35f91de158edc0.mockapi.io/yard")
-            .then((res) => {
-                console.log(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }
-
     render() {
         return (
             <div>
@@ -158,6 +148,7 @@ export default class CourtManager extends Component {
                                         <canvas id="chardoanhthuthang" width="vw-100" height />
                                     </div>
                                 </div>
+
                                 <div className="tab-pane fade" id="dsOrder" role="tabpanel">
                                     {/* Content for dsOrder */}
                                     <div className="row mb-4">
@@ -263,10 +254,20 @@ export default class CourtManager extends Component {
 
                                 {/* ----------------------Coso------------------------------------- */}
 
-                                <div className="tab-pane fade show active" id="dsCoSo" role="tabpanel">
+                                <div className="tab-pane fade " id="dsCoSo" role="tabpanel">
                                     <Court />
                                 </div>
+
                                 {/* ---------------------------------------kết thúc COw so------------------------------------------------- */}
+
+                                {/* ----------------------Staff---------------------------------------------------------------------- */}
+
+                                <div className="tab-pane fade" id="dsStaff" role="tabpanel">
+                                    <Staff />
+                                </div>
+
+                                {/* ---------------------------------------kết thúc staff------------------------------------------------- */}
+
                                 {/* yard */}
                                 <div className="tab-pane fade" id="dsYard" role="tabpanel">
                                     <h1 class="text-center">Trang quản lí thông tin sân</h1>
@@ -562,176 +563,11 @@ export default class CourtManager extends Component {
                                     </div>
                                 </div>
                             </div>
-
-                            <div className="tab-pane fade" id="dsStaff" role="tabpanel">
-                                {/*Danh sách sản phẩm */}
-                                <div className="row">
-                                    <div className="col-md-8">
-                                        {/* BEGIN BUTTON THÊM MỚI */}
-                                        <button id="btnThemStaff" className="btn btn-success w-25" data-toggle="modal" data-target="#myStaff">
-                                            <i className="fa fa-plus mr-1" />
-                                            Thêm Mới
-                                        </button>
-                                        {/* END BUTTON THÊM MỚI */}
-                                    </div>
-                                    <div className="col-md-4">
-                                        {/* BEGIN TÌM KIẾM */}
-                                        <div className="input-group mb-3">
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                placeholder="Nhập từ khóa"
-                                                aria-label="Recipient's username"
-                                                aria-describedby="basic-addon2"
-                                            />
-                                            <div className="input-group-append">
-                                                <span className="input-group-text" id="basic-addon2">
-                                                    <i className="fa fa-search" />
-                                                </span>
-                                            </div>
-                                        </div>
-                                        {/* END TÌM KIẾM */}
-                                    </div>
-                                </div>
-                                <div className="tblStaff" id="tblStaff">
-                                    {/* BEGIN TABLE SẢN PHẨM */}
-                                    <table className="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>STT</th>
-                                                <th>ID</th>
-                                                <th>Tên</th>
-                                                <th>Số điện thoại</th>
-                                                <th>Email</th>
-                                                <th>Thao tác</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="tbDSStaff" />
-                                    </table>
-                                    {/* END TABLE SẢN PHẨM */}
-                                </div>
-                                <br />
-                            </div>
                         </div>
                     </div>
                 </section>
                 <div className="footer-Manager ">
                     <p>© Badminton Court Management - Team 4 - SWP391</p>
-                </div>
-                {/*-Staff-*/}
-                <div className="modal fade" id="myStaff">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            {/* Modal Header */}
-                            <div className="modal-header">
-                                <h4 className="modal-title">Thêm nhân viên</h4>
-                                <button type="button" className="close" data-dismiss="modal">
-                                    ×
-                                </button>
-                            </div>
-                            {/* Modal body */}
-                            <div className="modal-body">
-                                <div className="form-group">
-                                    <label>Mã nhân viên</label>
-                                    <input id="MaNV" className="form-control" placeholder="Nhập vào mã nhân viên" />
-                                </div>
-                                <div className="form-group">
-                                    <label>Tên nhân viên</label>
-                                    <input id="TenNV" className="form-control" placeholder="Nhập vào tên nhân viên" />
-                                </div>
-                                <div className="form-group">
-                                    <label>Điện thoại</label>
-                                    <input id="DienThoai" className="form-control" placeholder="Nhập số điện thoại" />
-                                </div>
-                                <div className="form-group">
-                                    <label>Điện thoại</label>
-                                    <input id="DienThoai" className="form-control" placeholder="Nhập số điện thoại" />
-                                </div>
-                                <div className="form-group">
-                                    <label>Cơ sở</label>
-                                    <input id="CoSo" className="form-control" placeholder="Nhập cơ sở" />
-                                </div>
-                                <div className="form-group">
-                                    <label>Sân phụ trách</label>
-                                    <input id="SanPhuTrach" className="form-control" placeholder="Nhập vào sân phụ trách" />
-                                </div>
-                                <div className="form-group">
-                                    <label>Type</label>
-                                    <input id="Type" className="form-control" placeholder="Nhập Type" />
-                                </div>
-                                <div className="form-group">
-                                    <button onclick="addProduct()" className="btn btn-success">
-                                        Lưu
-                                    </button>
-                                    <button onclick="updateProduct()" className="btn btn-primary ml-2">
-                                        Hủy
-                                    </button>
-                                </div>
-                            </div>
-                            {/* Modal footer */}
-                            <div className="modal-footer" />
-                        </div>
-                    </div>
-                </div>
-
-                {/*-CoSo-*/}
-                <div className="modal fade" id="myCoSo">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            {/* Modal Header */}
-                            <div className="modal-header">
-                                <h4 className="modal-title">Thêm cơ sở</h4>
-                                <button type="button" className="close" data-dismiss="modal">
-                                    ×
-                                </button>
-                            </div>
-                            {/* Modal body */}
-                            <div className="modal-body">
-                                <div className="form-group">
-                                    <label>Mã cơ sở</label>
-                                    <input id="MaCS" className="form-control" placeholder="Nhập vào mã cơ sở" />
-                                </div>
-                                <div className="form-group">
-                                    <label>Tên cơ sở</label>
-                                    <input id="TênCS" className="form-control" placeholder="Nhập vào tên cơ sở" />
-                                </div>
-                                <div className="form-group">
-                                    <label>Địa chỉ</label>
-                                    <input id="Diachi" className="form-control" placeholder="Nhập địa chỉ" />
-                                </div>
-                                <div className="form-group">
-                                    <label>Giờ làm việc</label>
-                                    <input id="Workhour" className="form-control" placeholder="Nhập khung giờ" />
-                                </div>
-                                <div className="form-group">
-                                    <label>Giờ làm việc</label>
-                                    <input id="Workhour" className="form-control" placeholder="Nhập khung giờ" />
-                                </div>
-                                <div className="form-group">
-                                    <label>Đánh giá</label>
-                                    <input id="Feedback" className="form-control" placeholder="Nhập khung giờ" />
-                                </div>
-                                <div className="form-group">
-                                    <label>Số sân</label>
-                                    <input id="Yardnumber" className="form-control" placeholder="Nhập số sân" />
-                                </div>
-                                <div className="form-group">
-                                    <label>Số sân</label>
-                                    <input id="Yardnumber" className="form-control" placeholder="Nhập đánh giá" />
-                                </div>
-                                <div className="form-group">
-                                    <button onclick="addProduct()" className="btn btn-success">
-                                        Lưu
-                                    </button>
-                                    <button onclick="updateProduct()" className="btn btn-primary ml-2">
-                                        Hủy
-                                    </button>
-                                </div>
-                            </div>
-                            {/* Modal footer */}
-                            <div className="modal-footer" />
-                        </div>
-                    </div>
                 </div>
 
                 {/* yard */}

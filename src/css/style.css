@@ -591,6 +591,8 @@ label.star:before {
     color: #317c69;
     font-weight: 25px;
     font-weight: 700;
+    font-weight: 600;
+    font-size: 23px;
 }
 
 .cmt-content i {
@@ -602,11 +604,6 @@ label.star:before {
     font-weight: 800;
     font-style: italic;
     color: #4caf50;
-}
-
-.cmt h4 {
-    font-weight: 600;
-    font-size: 23px;
 }
 
 .cus-img {
@@ -640,11 +637,6 @@ label.star:before {
 }
 
 /* -----Manager------------ */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
 img {
     display: block;
@@ -852,10 +844,7 @@ ul li {
 .manager .body-manager .manager-left .list-option ul li .nav-link.active span {
     color: black;
 }
-.manager th {
-}
-.manager td {
-}
+
 .manager td i {
     font-size: 25px;
     width: 100%;
@@ -916,11 +905,14 @@ ul li {
     font-size: inherit;
     margin-left: 10px;
     order: 2;
+
+    border-radius: 10px;
+    padding: 10px 0;
+    color: white;
+
+    justify-content: center;
 }
 
-.logout:hover {
-    transition: 0.5s;
-}
 .manager .topbar .select-branch {
     border-radius: 10px;
     padding: 5px 10px;
@@ -950,7 +942,7 @@ ul li {
     display: flex;
 
     border-radius: 4px;
-    justify-content: center;
+
     padding: 10px 0;
     margin: 10px 0 30px 0;
     width: 60%;
@@ -961,7 +953,6 @@ ul li {
 }
 
 .status .nav-link {
-    padding: 0 30px;
     position: relative;
     color: rgb(52, 58, 64);
 
@@ -1001,14 +992,7 @@ ul li {
     padding-left: 5px;
     border-radius: 10px;
 }
-.logout {
-    background-color: red;
-    border-radius: 10px;
-    padding: 10px 0;
-    color: white;
-    display: flex;
-    justify-content: center;
-}
+
 .logout:hover {
     background-color: green;
     text-decoration: none;
