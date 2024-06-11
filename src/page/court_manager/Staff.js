@@ -87,7 +87,7 @@ export default class Staff extends Component {
                     });
                 })
                 .catch((err) => {
-                    alert("Có lỗi trong quá trình xóa cơ sở. Thử lại au!", err);
+                    alert("Có lỗi trong quá trình xóa cơ sở. Thử lại sau!", err);
                 });
         }
     };
