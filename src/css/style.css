@@ -42,17 +42,6 @@ p {
 .yard h1 {
     color: black !important;
 }
-.button {
-    background-image: linear-gradient(to right, #8360c3, #2ebf91);
-    color: white;
-    text-decoration: none;
-    font-weight: 800;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
 
 h1 {
     color: #317c69 !important;
