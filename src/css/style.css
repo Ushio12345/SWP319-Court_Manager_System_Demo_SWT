@@ -339,6 +339,12 @@ label.star {
     transition: all 0.2s;
 }
 
+input.star:checked ~ label.star:before {
+    content: "\f005";
+    color: #fd4;
+    transition: all 0.25s;
+}
+
 input.star-5:checked ~ label.star:before {
     color: #fe7;
     text-shadow: 0 0 20px #952;
@@ -1096,7 +1102,7 @@ form h1 {
     margin: 70px auto;
     text-align: center;
     color: aliceblue;
-    width: 50%;
+
     background: transparent;
     border: 2px solid rgba(189, 185, 185, 0.378);
     -webkit-backdrop-filter: blur(20px);
@@ -1104,8 +1110,6 @@ form h1 {
     padding: 20px;
     border-top-left-radius: 50px;
     border-bottom-right-radius: 50px;
-    display: flex;
-    align-items: center;
 }
 .login-form .login-right {
     width: 50%;
