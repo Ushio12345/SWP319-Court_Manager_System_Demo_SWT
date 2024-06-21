@@ -339,12 +339,6 @@ label.star {
     transition: all 0.2s;
 }
 
-input.star:checked ~ label.star:before {
-    content: "\f005";
-    color: #fd4;
-    transition: all 0.25s;
-}
-
 input.star-5:checked ~ label.star:before {
     color: #fe7;
     text-shadow: 0 0 20px #952;
